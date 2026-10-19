@@ -17,7 +17,15 @@ function addToCart(cart, product, quantity) {
 
 
 
-function changeQuantity() { return notImplemented(); }
+function changeQuantity(cart, id, quantity) { 
+  const product = cart.find((item) => item.id === id);
+  if(!product) return cart;
+  if(quantity === 0) throw new RangeError('Количество должно быть положительным числом.');
+  if (quantity > product.stock) throw new RangeError('Нельзя добавить в корзину больше товара, чем есть на складе.');
+
+  return cart.map((item) => item.id === id ? { ...item, quantity } : item);
+
+}
 function removeFromCart() { return notImplemented(); }
 function calculateCartSubtotal() { return notImplemented(); }
 function calculateOrderTotal() { return notImplemented(); }
